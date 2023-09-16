@@ -1,0 +1,129 @@
+<!doctype html>
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A tiny, easily configurable, fully customizable jQuery plugin for adding a clear button to your input fields">
+        <link rel="shortcut icon" href="favicon.ico">
+        <title>A tiny jQuery plugin for enhancing web forms by allowing users to easily clear values in input boxes</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/united/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCoreDefault.css" />
+
+        <link rel="stylesheet" href="examples.css" type="text/css">
+        <link rel="stylesheet" href="../dist/zebra_clearinput.min.css" type="text/css">
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCss.min.js"></script>
+
+        <script>
+            SyntaxHighlighter.defaults['toolbar'] = false;
+            SyntaxHighlighter.all();
+        </script>
+
+    </head>
+
+    <body>
+
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Zebra ClearInput</h1>
+                <p>A tiny jQuery plugin for enhancing web forms by allowing users to easily clear values in text input boxes</p>
+                <hr>
+                <p>
+                    <a href="https://github.com/stefangabos/Zebra_ClearInput/archive/master.zip" class="btn btn-primary btn-lg" role="button" style="text-decoration: none">Download</a>
+                    <a href="https://github.com/stefangabos/Zebra_ClearInput" class="btn btn-primary btn-lg" role="button" style="text-decoration: none">View on GitHub</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-xs-12">
+                    <p>
+                        No configuration required.
+                    </p>
+                    <pre class="brush:js">
+                    $(document).ready(function() {
+
+                        // the argument is a selector of input fields you want to attach the plugin to
+                        // in this example, all the text input fields
+                        var clearInput = new $.Zebra_ClearInput('input[type="text"]');
+
+                    });
+                    </pre>
+                    <p>
+                        Start typing in the text field below to see the option for clearing the value appear.<br>
+                        Once the input looses focus, the option for clearing the value will appear only when the mouse moves over the text field.
+                    </p>
+                    <div class="form-group">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <p>
+                        A smaller input size...
+                    </p>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-sm">
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <p>
+                        A larger input size...
+                    </p>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 15px; margin-bottom: 15px">
+                <div class="col-xs-12">
+                    <input type="button" value="Remove plugin" id="destroy" class="btn btn-info">
+                    <pre class="brush:js">
+                    $(document).ready(function() {
+
+                        // will run
+                        clearInput.destroy();
+
+                    });
+                    </pre>
+                </div>
+            </div>
+
+            <div class="row" style="margin-bottom: 100px">
+                <div class="col-xs-12">
+                    <input type="button" value="Enable plugin" id="enable" class="btn btn-info">
+                    <pre class="brush:js">
+                    $(document).ready(function() {
+
+                        // will run
+                        var clearInput = new $.Zebra_ClearInput('input[type="text"]');
+
+                    });
+                    </pre>
+                </div>
+            </div>
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../dist/zebra_clearinput.min.js"></script>
+        <script src="examples.js"></script>
+
+    </body>
+
+</html>
