@@ -14,12 +14,12 @@
  *  Features:
  *
  *  -   it works out of the box and has (almost) no configuration options
- *  -   works in any browser - Firefox, Chrome, Safari, Edge, Opera and Internet Explorer 6+
+ *  -   works in all modern browsers
  *
  *  Read more {@link https://github.com/stefangabos/Zebra_ClearInput/ here}
  *
  *  @author     Stefan Gabos <contact@stefangabos.ro>
- *  @version    1.0.0 (last revision: September 16, 2023)
+ *  @version    1.1.0 (last revision: September 17, 2023)
  *  @copyright  (c) 2023 Stefan Gabos
  *  @license    http://www.gnu.org/licenses/lgpl-3.0.txt GNU LESSER GENERAL PUBLIC LICENSE
  *  @package    Zebra_ClearInput
