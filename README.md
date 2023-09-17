@@ -14,7 +14,7 @@ As soon as a user begins typing in the input field, the option to clear the inpu
 
  - it works out of the box and has (almost) no configuration options
  - it is really tiny - it weighs 1.4KB uncompressed and ~600 bytes gzipped
- - works in any browser - Firefox, Chrome, Safari, Edge, Opera and Internet Explorer 6+
+ - works in any modern browser - Firefox, Chrome, Safari, Edge, Opera
 
 ## 🎂 Support the development of this project
 
