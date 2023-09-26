@@ -96,7 +96,9 @@
                     <pre class="brush:js">
                     $(document).ready(function() {
 
-                        // will run
+                        // remove the plugin from all text inputs
+                        // (this assumes that previously the plugin was
+                        // instantiated and held in the "clearInput" variable)
                         clearInput.destroy();
 
                     });
@@ -110,7 +112,7 @@
                     <pre class="brush:js">
                     $(document).ready(function() {
 
-                        // will run
+                        // enable the plugin on all text inputs
                         var clearInput = new $.Zebra_ClearInput('input[type="text"]');
 
                     });
