@@ -10,9 +10,8 @@
     line-height: 21px;
     text-decoration: none !important;
     background: #FFF;
-    opacity: .8;
+    opacity: 0.8;
 }
-
 .Zebra_ClearInput:hover, .Zebra_ClearInput:focus {
     border-color: #dedede;
     box-shadow: 0 0 5px #dedede;
