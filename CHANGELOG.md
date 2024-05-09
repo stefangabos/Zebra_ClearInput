@@ -1,8 +1,8 @@
-## version 1.1.1 (May 09, 2024)
+## version 1.0.2 (May 09, 2024)
 
 - minor maintenance release
 
-## version 1.1.0 (September 17, 2023)
+## version 1.0.1 (September 17, 2023)
 
 - improved management of button and text overlapping
 
