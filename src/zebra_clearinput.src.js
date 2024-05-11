@@ -20,7 +20,7 @@
  *
  *  @author     Stefan Gabos <contact@stefangabos.ro>
  *  @version    1.0.2 (last revision: May 09, 2024)
- *  @copyright  (c) 2023 - 204 Stefan Gabos
+ *  @copyright  (c) 2023 - 2024 Stefan Gabos
  *  @license    http://www.gnu.org/licenses/lgpl-3.0.txt GNU LESSER GENERAL PUBLIC LICENSE
  *  @package    Zebra_ClearInput
  */
