@@ -4,19 +4,20 @@
     border-radius: 4px;
     padding: 1px 7px 0;
     font-size: 16px;
-    color: #666 !important;
+    color: #666!important;
     font-family: Arial;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 21px;
-    text-decoration: none !important;
-    background: #FFF;
-    opacity: 0.8;
+    text-decoration: none!important;
+    background: #fff;
+    opacity: .8
 }
-.Zebra_ClearInput:hover, .Zebra_ClearInput:focus {
+.Zebra_ClearInput:focus,
+.Zebra_ClearInput:hover {
     border-color: #dedede;
     box-shadow: 0 0 5px #dedede;
-    background: #F0f0f0;
-    color: #000 !important;
+    background: #f0f0f0;
+    color: #000!important;
     opacity: 1;
-    outline: 0 !important;
+    outline: 0!important
 }
