@@ -28,14 +28,14 @@ module.exports = function(grunt) {
 
         /***************************************************************************************************************
          *  SASS
-         *  https://www.npmjs.org/package/grunt-sass
+         *  https://www.npmjs.org/package/grunt-sass-modern
          **************************************************************************************************************/
         'sass': {
             expanded: {
                 options: {
                     implementation: sass,
                     outputStyle: 'expanded',
-                    indentWidth: 4
+                    api: 'modern'
                 },
                 files: {
                     'dist/zebra_clearinput.css': 'src/zebra_clearinput.scss'
@@ -44,7 +44,8 @@ module.exports = function(grunt) {
             minified: {
                 options: {
                     implementation: sass,
-                    outputStyle: 'compressed'
+                    outputStyle: 'compressed',
+                    api: 'modern'
                 },
                 files: {
                     'dist/zebra_clearinput.min.css': 'src/zebra_clearinput.scss'
@@ -147,7 +148,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-notify');
-    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-sass-modern');
 
     grunt.registerTask('default', ['sass', 'eslint', 'jshint', 'uglify', 'copy', 'watch']);
 
