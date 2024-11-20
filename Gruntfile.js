@@ -54,6 +54,49 @@ module.exports = function(grunt) {
         },
 
         /***************************************************************************************************************
+         *  CSSMIN
+         *  https://github.com/gruntjs/grunt-contrib-cssmin
+         **************************************************************************************************************/
+        'cssmin': {
+            beutify: {
+                options: {
+                    format: {
+                        breaks: {
+                            afterAtRule: true,
+                            afterBlockBegins: true,
+                            afterBlockEnds: true,
+                            afterComment: true,
+                            afterProperty: true,
+                            afterRuleBegins: true,
+                            afterRuleEnds: true,
+                            beforeBlockEnds: true,
+                            betweenSelectors: true
+                        },
+                        indentBy: 4,
+                        indentWith: 'space',
+                        spaces: {
+                            aroundSelectorRelation: true,
+                            beforeBlockBegins: true,
+                            beforeValue: true
+                        }
+                    },
+                    level: 2
+                },
+                files: {
+                    'dist/zebra_clearinput.css': 'dist/zebra_clearinput.css',
+                }
+            },
+            minify: {
+                options: {
+                    level: 2
+                },
+                files: {
+                    'dist/zebra_clearinput.min.css': 'dist/zebra_clearinput.min.css',
+                }
+            }
+        },
+
+        /***************************************************************************************************************
          *  ESLINT
          *  http://eslint.org/docs/rules/
          **************************************************************************************************************/
@@ -142,6 +185,7 @@ module.exports = function(grunt) {
 
     // register plugins
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -150,6 +194,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
     grunt.loadNpmTasks('grunt-sass-modern');
 
-    grunt.registerTask('default', ['sass', 'eslint', 'jshint', 'uglify', 'copy', 'watch']);
+    grunt.registerTask('default', ['sass', 'cssmin', 'eslint', 'jshint', 'uglify', 'copy', 'watch']);
 
 };
