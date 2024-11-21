@@ -34,7 +34,7 @@ module.exports = function(grunt) {
             expanded: {
                 options: {
                     implementation: sass,
-                    outputStyle: 'expanded',
+                    style: 'expanded',
                     api: 'modern'
                 },
                 files: {
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
             minified: {
                 options: {
                     implementation: sass,
-                    outputStyle: 'compressed',
+                    style: 'compressed',
                     api: 'modern'
                 },
                 files: {
