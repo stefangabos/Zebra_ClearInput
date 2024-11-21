@@ -31,22 +31,19 @@ module.exports = function(grunt) {
          *  https://www.npmjs.org/package/grunt-sass-modern
          **************************************************************************************************************/
         'sass': {
+            options: {
+                implementation: sass,
+                api: 'modern'
+            },
             expanded: {
                 options: {
-                    implementation: sass,
                     style: 'expanded',
-                    api: 'modern'
                 },
                 files: {
                     'dist/zebra_clearinput.css': 'src/zebra_clearinput.scss'
                 }
             },
             minified: {
-                options: {
-                    implementation: sass,
-                    style: 'compressed',
-                    api: 'modern'
-                },
                 files: {
                     'dist/zebra_clearinput.min.css': 'src/zebra_clearinput.scss'
                 }
