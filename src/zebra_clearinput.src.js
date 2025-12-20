@@ -44,6 +44,12 @@
 
                 plugin.settings = $.extend({}, defaults, options);
 
+                // create unique namespace for this instance to avoid conflicts with other instances
+                plugin.namespace = '.zebra_clear_input_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+
+                // track elements for this instance
+                plugin.elements = [];
+
                 // iterate over the elements the plugin needs to be attached to
                 $(selector).each(function() {
 
@@ -54,6 +60,9 @@
 
                         // the button to clear the input's value
                         $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html('×');
+
+                    // track elements for this instance
+                    plugin.elements.push($element);
 
                     // the element the plugin is attached to
                     $element
@@ -86,7 +95,7 @@
 
                 });
 
-                $(document).on('mouseover.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
+                $(document).on('mouseover' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
 
                     var $element = $(this).data('zci_input');
 
@@ -98,7 +107,7 @@
 
                 });
 
-                $(document).on('mouseout.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
+                $(document).on('mouseout' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
 
                     var $element = $(this).data('zci_input');
 
@@ -110,21 +119,21 @@
 
                 });
 
-                $(document).on('blur.zebra_clear_input', '.' + plugin.settings.container_class_name + ' input', function() {
+                $(document).on('blur' + plugin.namespace, '.' + plugin.settings.container_class_name + ' input', function() {
 
                     // hide the button for clearing the value
                     hide($(this));
 
                 });
 
-                $(document).on('focus.zebra_clear_input keyup.zebra_clear_input', '.' + plugin.settings.container_class_name + ' input', function() {
+                $(document).on('focus' + plugin.namespace + ' keyup' + plugin.namespace, '.' + plugin.settings.container_class_name + ' input', function() {
 
                     // show the button for clearing the value
                     show($(this));
 
                 });
 
-                $(document).on('click.zebra_clear_input', '.' + plugin.settings.button_class_name, function() {
+                $(document).on('click' + plugin.namespace, '.' + plugin.settings.button_class_name, function() {
 
                     var $element = $(this).prev();
 
@@ -199,13 +208,13 @@
         */
         plugin.destroy = function() {
 
-            $(document).off('.zebra_clear_input');
+            // remove only this instance's event handlers
+            $(document).off(plugin.namespace);
 
-            // iterate over the elements the plugin is attached to
-            $('.' + plugin.settings.container_class_name).each(function() {
+            // iterate over the elements from this instance
+            $.each(plugin.elements, function(_, $element) {
 
-                var $element = $('input', this),
-                    $button = $element.data('zci_button');
+                var $button = $element.data('zci_button');
 
                 // if not already removed
                 if ($button) {
@@ -216,13 +225,16 @@
                     // remove the container DIV
                     $element.unwrap();
 
-                    // remove associated data attribute
+                    // remove associated data attributes
                     $element.removeData('zci_mouseover');
                     $element.removeData('zci_button');
 
                 }
 
             });
+
+            // clear the elements array
+            plugin.elements = [];
 
         }
 
