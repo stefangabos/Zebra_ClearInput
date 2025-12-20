@@ -207,9 +207,14 @@
              */
             hide = function($input, force) {
 
+                var $clear_button = $input.data('zci_button');
+
+                // stop if for some reason the button doesn't exist anymore
+                if (!$clear_button) return;
+
                 // if "force" is TRUE or the mouse is not over the text input element and the text input element does
                 // not have focus, hide the button
-                if (force || (!$input.data('zci_mouseover') && !$input.is(':focus'))) $input.data('zci_button').hide();
+                if (force || (!$input.data('zci_mouseover') && !$input.is(':focus'))) $clear_button.hide();
 
             },
 
@@ -224,11 +229,16 @@
              */
             show = function($input) {
 
+                var $clear_button = $input.data('zci_button');
+
+                // stop if for some reason the button doesn't exist anymore
+                if (!$clear_button) return;
+
                 // if the input field has any value, show the button
-                if ($input.val() !== '') $input.data('zci_button').show();
+                if ($input.val() !== '') $clear_button.show();
 
                 // hide it otherwise
-                else $input.data('zci_button').hide();
+                else $clear_button.hide();
 
             };
 
