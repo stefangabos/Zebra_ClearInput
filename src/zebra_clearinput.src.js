@@ -52,6 +52,11 @@
                 // track inputs for this instance
                 plugin.inputs = [];
 
+                // cache selector strings to avoid repeated concatenation
+                var container_selector = '.' + plugin.settings.container_class_name,
+                    button_selector = '.' + plugin.settings.button_class_name,
+                    input_selector = container_selector + ' input';
+
                 // iterate over the input elements the plugin needs to be attached to
                 $(selector).each(function() {
 
@@ -59,7 +64,7 @@
 
                 });
 
-                $(document).on('mouseover' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
+                $(document).on('mouseover' + plugin.namespace, container_selector, function() {
 
                     var $input = $(this).data('zci_input');
 
@@ -71,7 +76,7 @@
 
                 });
 
-                $(document).on('mouseout' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
+                $(document).on('mouseout' + plugin.namespace, container_selector, function() {
 
                     var $input = $(this).data('zci_input');
 
@@ -83,21 +88,21 @@
 
                 });
 
-                $(document).on('blur' + plugin.namespace, '.' + plugin.settings.container_class_name + ' input', function() {
+                $(document).on('blur' + plugin.namespace, input_selector, function() {
 
                     // hide the button for clearing the value
                     hide($(this));
 
                 });
 
-                $(document).on('focus' + plugin.namespace + ' keyup' + plugin.namespace, '.' + plugin.settings.container_class_name + ' input', function() {
+                $(document).on('focus' + plugin.namespace + ' keyup' + plugin.namespace, input_selector, function() {
 
                     // show the button for clearing the value
                     show($(this));
 
                 });
 
-                $(document).on('click' + plugin.namespace, '.' + plugin.settings.button_class_name, function() {
+                $(document).on('click' + plugin.namespace, button_selector, function() {
 
                     var $input = $(this).prev();
 
