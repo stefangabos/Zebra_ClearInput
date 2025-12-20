@@ -33,7 +33,8 @@
         var defaults = {
                 container_class_name: 'Zebra_ClearInput_Container',
                 button_class_name: 'Zebra_ClearInput',
-                button_content: '×'
+                button_content: '×',
+                enable_on_password: false
             },
 
             plugin = this,
@@ -54,9 +55,15 @@
                 // iterate over the elements the plugin needs to be attached to
                 $(selector).each(function() {
 
-                    var $element = $(this),
+                    var $element = $(this);
 
-                        // get input's "position" attribute
+                    // only process input and textarea elements
+                    if (!$element.is('input, textarea')) return;
+
+                    // skip password fields unless explicitly enabled
+                    if ($element.is('input[type="password"]') && !plugin.settings.enable_on_password) return;
+
+                    var // get input's "position" attribute
                         position = $element.css('position'),
 
                         // the button to clear the input's value
