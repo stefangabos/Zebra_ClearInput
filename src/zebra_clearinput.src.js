@@ -19,8 +19,8 @@
  *  Read more {@link https://github.com/stefangabos/Zebra_ClearInput/ here}
  *
  *  @author     Stefan Gabos <contact@stefangabos.ro>
- *  @version    1.0.2 (last revision: May 09, 2024)
- *  @copyright  (c) 2023 - 2024 Stefan Gabos
+ *  @version    2.0.0 (last revision: December 20, 2025)
+ *  @copyright  (c) 2023 - 2025 Stefan Gabos
  *  @license    http://www.gnu.org/licenses/lgpl-3.0.txt GNU LESSER GENERAL PUBLIC LICENSE
  *  @package    Zebra_ClearInput
  */
@@ -28,7 +28,7 @@
 
     'use strict';
 
-    $.Zebra_ClearInput = function(element, options) {
+    $.Zebra_ClearInput = function(selector, options) {
 
         var defaults = {
                 container_class_name: 'Zebra_ClearInput_Container',
@@ -44,8 +44,8 @@
 
                 plugin.settings = $.extend({}, defaults, options);
 
-                // iterate over the elements the plugin is attached to
-                $(element).each(function() {
+                // iterate over the elements the plugin needs to be attached to
+                $(selector).each(function() {
 
                     var $element = $(this),
 
@@ -53,39 +53,7 @@
                         position = $element.css('position'),
 
                         // the button to clear the input's value
-                        $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html('×').on({
-
-                            mouseover: function() {
-
-                                // we're using this to know when the mouse is over the input field
-                                $element.data('zci_mouseover', true);
-
-                                // show the button for clearing the value
-                                show($element);
-
-                            },
-
-                            mouseout: function() {
-
-                                // we're using this to know when the mouse is over the input field
-                                $element.removeData('zci_mouseover');
-
-                                // hide the button for clearing the value
-                                hide($element);
-
-                            },
-
-                            click: function() {
-
-                                // clear value and give focus to the element
-                                $element.val('').focus();
-
-                                // hide the button forcefully
-                                hide($element, true);
-
-                            }
-
-                        });
+                        $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html('×');
 
                     // the element the plugin is attached to
                     $element
@@ -100,47 +68,7 @@
                         // because we nee to position it after we can get its size
                         .after($button.css({
                             visibility: 'hidden'
-                        }))
-
-                        // attach event listeners
-                        // (we namespace them so we can easily remove them if destroyed)
-                        .on({
-
-                            'mouseover.Zebra_ClearInput': function() {
-
-                                // we're using this to know when the mouse is over the input field
-                                $element.data('zci_mouseover', true);
-
-                                // show the button for clearing the value
-                                show($element);
-
-                            },
-
-                            'mouseout.Zebra_ClearInput': function() {
-
-                                // we're using this to know when the mouse is over the input field
-                                $element.removeData('zci_mouseover');
-
-                                // hide the button for clearing the value
-                                hide($element);
-
-                            },
-
-                            'blur.Zebra_ClearInput': function() {
-
-                                // hide the button for clearing the value
-                                hide($element);
-
-                            },
-
-                            'keyup.Zebra_ClearInput': function() {
-
-                                // show the button for clearing the value
-                                show($element);
-
-                            }
-
-                        });
+                        }));
 
                     // the button is now in the DOM so we can position it correctly at the right of the input box
                     // and centered vertically
@@ -154,6 +82,56 @@
 
                     // store the reference to the button
                     $element.data('zci_button', $button);
+
+                });
+
+                $(document).on('mouseover.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
+
+                    var $element = $('input', this);
+
+                    // we're using this to know when the mouse is over the container
+                    $element.data('zci_mouseover', true);
+
+                    // show the button for clearing the value
+                    show($element);
+
+                });
+
+                $(document).on('mouseout.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
+
+                    var $element = $('input', this);
+
+                    // we're using this to know when the mouse is over the container
+                    $element.data('zci_mouseover', false);
+
+                    // hide the button for clearing the value
+                    hide($element);
+
+                });
+
+                $(document).on('blur.zebra_clear_input', '.' + plugin.settings.container_class_name + ' input', function() {
+
+                    // hide the button for clearing the value
+                    hide($(this));
+
+                });
+
+                $(document).on('focus.zebra_clear_input keyup.zebra_clear_input', '.' + plugin.settings.container_class_name + ' input', function() {
+
+                    // show the button for clearing the value
+                    show($(this));
+
+                });
+
+                $(document).on('click.zebra_clear_input', '.' + plugin.settings.button_class_name, function() {
+
+                    var $element = $(this).prev();
+
+                    // clear value and give focus to the element
+                    $element.val('').trigger('focus');
+
+                    // hide the button forcefully
+                    hide($element, true);
 
                 });
 
@@ -180,12 +158,9 @@
              */
             hide = function($element, force) {
 
-                // get the reference to the button associated with the element given as argument
-                var $button = $element.data('zci_button');
-
                 // if "force" is TRUE or the mouse is not over the text input element and the text input element does
                 // not have focus, hide the button
-                if (force || (!$element.data('zci_mouseover') && !$element.is(':focus'))) $button.hide();
+                if (force || (!$element.data('zci_mouseover') && !$element.is(':focus'))) $element.data('zci_button').hide();
 
             },
 
@@ -200,14 +175,11 @@
              */
             show = function($element) {
 
-                // get the reference to the button associated with the element given as argument
-                var $button = $element.data('zci_button');
-
                 // if the input field has any value, show the button
-                if ($element.val() !== '') $button.show();
+                if ($element.val() !== '') $element.data('zci_button').show();
 
                 // hide it otherwise
-                else $button.hide();
+                else $element.data('zci_button').hide();
 
             };
 
@@ -226,10 +198,12 @@
         */
         plugin.destroy = function() {
 
-            // iterate over the elements the plugin is attached to
-            $(element).each(function() {
+            $(document).off('.zebra_clear_input');
 
-                var $element = $(this),
+            // iterate over the elements the plugin is attached to
+            $('.' + plugin.settings.container_class_name).each(function() {
+
+                var $element = $('input', this),
                     $button = $element.data('zci_button');
 
                 // if not already removed
@@ -240,9 +214,6 @@
 
                     // remove the container DIV
                     $element.unwrap();
-
-                    // remove event handlers attached to the input element
-                    $element.off('.Zebra_ClearInput');
 
                     // remove associated data attribute
                     $element.removeData('zci_mouseover');
