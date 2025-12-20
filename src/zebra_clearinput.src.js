@@ -226,7 +226,7 @@
             /**
              *  Shows the button for clearing the text input element's value *if* the text input element has a value
              *
-             *  @param  jQuery  $input      The text input element, as jQuery object, for which to hide the associated
+             *  @param  jQuery  $input      The text input element, as jQuery object, for which to show the associated
              *                              button.
              *
              *  @access private
@@ -303,7 +303,7 @@
         *   $('body').append('<input type="text" name="dynamic">');
         *
         *   // refresh to initialize the new inputs
-        *   clearInput.refresh();
+        *   clearInput.update();
         *   </code>
         *
         *  @return void
