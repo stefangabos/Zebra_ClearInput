@@ -32,7 +32,8 @@
 
         var defaults = {
                 container_class_name: 'Zebra_ClearInput_Container',
-                button_class_name: 'Zebra_ClearInput'
+                button_class_name: 'Zebra_ClearInput',
+                button_content: '×'
             },
 
             plugin = this,
@@ -59,7 +60,7 @@
                         position = $element.css('position'),
 
                         // the button to clear the input's value
-                        $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html('×');
+                        $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html(plugin.settings.button_content);
 
                     // track elements for this instance
                     plugin.elements.push($element);
