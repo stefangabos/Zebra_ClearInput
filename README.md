@@ -1,20 +1,26 @@
 <img src="https://raw.githubusercontent.com/stefangabos/zebrajs/master/docs/images/logo.png" alt="zebrajs" align="right">
 
-# Zebra ClearInput &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A+tiny+jQuery+plugin+for+enhancing+web+forms+by+allowing+users+to+easily+clear+values+in+text+input+boxes&url=https://github.com/stefangabos/Zebra_ClearInput&via=stefangabos&hashtags=jquery,javascript)
+# Zebra ClearInput &nbsp;[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=A+tiny+high-performance+jQuery+plugin+for+enhancing+web+forms+by+allowing+users+to+easily+clear+input+field+values&url=https://github.com/stefangabos/Zebra_ClearInput&via=stefangabos&hashtags=jquery,javascript)
 
-*A tiny jQuery plugin for enhancing web forms by allowing users to easily clear values in text input boxes*
+*A tiny, high-performance jQuery plugin for enhancing web forms by allowing users to easily clear input field values*
 
 [![npm](https://img.shields.io/npm/v/zebra_clearinput.svg)](https://www.npmjs.com/package/zebra_clearinput) [![Total](https://img.shields.io/npm/dt/zebra_clearinput.svg)](https://www.npmjs.com/package/zebra_clearinput) [![Monthly](https://img.shields.io/npm/dm/zebra_clearinput.svg)](https://www.npmjs.com/package/zebra_clearinput) [![](https://data.jsdelivr.com/v1/package/npm/zebra_clearinput/badge?style=rounded)](https://www.jsdelivr.com/package/npm/zebra_clearinput)  [![License](https://img.shields.io/npm/l/zebra_clearinput.svg)](https://github.com/stefangabos/Zebra_ClearInput/blob/master/LICENSE.md)
 
-Zebra ClearInput is a lightweight jQuery plugin designed to enhance the usability of web forms by adding a user-friendly feature that allows users to effortlessly clear the content of input fields. This is achieved by attaching a small icon to input fields. When users click on this icon, it promptly erases any text that has been entered.
+Zebra ClearInput is a lightweight, optimized jQuery plugin that enhances form usability by adding an intuitive clear button to input fields. When users click this button, it instantly erases the input content and returns focus to the field for immediate re-entry.
 
-As soon as a user begins typing in the input field, the option to clear the input value becomes visible. Once the input field loses focus, the option to clear the value reappears when the mouse hovers over the input field.
+The clear button appears automatically when users start typing and intelligently manages its visibility: it shows immediately on focus or hover, and gracefully hides when the field is empty or loses focus.
 
 ## Features
 
- - it works out of the box and has (almost) no configuration options
- - it is really tiny - it weighs 1.4KB uncompressed and ~600 bytes gzipped
- - works in any modern browser - Firefox, Chrome, Safari, Edge, Opera
+ - works out of the box with sensible defaults and minimal configuration
+ - optimized performance with event delegation
+ - supports multiple independent instances with isolated namespacing
+ - dynamically handles inputs added after initialization via `update()` method
+ - responsive layout preservation
+ - graceful error handling and memory leak prevention
+ - `destroy()` method for complete cleanup
+ - really tiny - weighs ~2KB uncompressed and ~800 bytes gzipped
+ - works in all modern browsers - Firefox, Chrome, Safari, Edge, Opera
 
 ## 🎂 Support the development of this project
 
@@ -139,6 +145,24 @@ $(document).ready(function() {
         <td valign="top"><code>Zebra_ClearInput</code></td>
         <td valign="top">The CSS class(es) to be applied to the button associated with the text input element</td>
     </tr>
+    <tr>
+        <td valign="top"><code>button_content</code></td>
+        <td valign="top"><em>string</em></td>
+        <td valign="top"><code>×</code></td>
+        <td valign="top">The HTML content to display inside the clear button (can be text, HTML entities, or icon markup)</td>
+    </tr>
+    <tr>
+        <td valign="top"><code>enable_on_password</code></td>
+        <td valign="top"><em>boolean</em></td>
+        <td valign="top"><code>false</code></td>
+        <td valign="top">Whether to enable the clear button on password input fields.</td>
+    </tr>
+    <tr>
+        <td valign="top"><code>debounce_delay</code></td>
+        <td valign="top"><em>integer</em></td>
+        <td valign="top"><code>150</code></td>
+        <td valign="top">Delay in milliseconds for debouncing keyup events. Reduces show() calls during rapid typing. Set to <code>0</code> to disable debouncing.</td>
+    </tr>
     </tbody>
 </table>
 
@@ -146,7 +170,7 @@ $(document).ready(function() {
 
 ### `destroy()`
 
-Removes a previously created instance of the plugin.
+Removes a previously created instance of the plugin. This method cleans up all event handlers, removes buttons, unwraps containers and clears data attributes.
 
 ```javascript
 // apply to all text input elements
@@ -154,6 +178,21 @@ var clearInput = new $.Zebra_ClearInput('input[type="text"]');
 
 // remove plugin
 clearInput.destroy();
+```
+
+### `update()`
+
+Updates the plugin to initialize clear input buttons on dynamically added inputs. This method scans the original selector for any new input elements that weren't present during initial plugin initialization and adds clear buttons to them.
+
+```javascript
+// apply to all text input elements
+var clearInput = new $.Zebra_ClearInput('input[type="text"]');
+
+// add new inputs dynamically
+$('body').append('<input type="text" name="dynamic">');
+
+// update to initialize the new inputs
+clearInput.update();
 ```
 
 ## Sponsors
