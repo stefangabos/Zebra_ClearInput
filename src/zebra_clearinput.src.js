@@ -28,6 +28,9 @@
 
     'use strict';
 
+    // make sure jQuery is available
+    if (typeof jQuery === 'undefined') throw new Error('Zebra_ClearInput requires jQuery');
+
     $.Zebra_ClearInput = function(selector, options) {
 
         var defaults = {
