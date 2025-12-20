@@ -49,37 +49,37 @@
                 // create unique namespace for this instance to avoid conflicts with other instances
                 plugin.namespace = '.zebra_clear_input_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
 
-                // track elements for this instance
-                plugin.elements = [];
+                // track inputs for this instance
+                plugin.inputs = [];
 
-                // iterate over the elements the plugin needs to be attached to
+                // iterate over the input elements the plugin needs to be attached to
                 $(selector).each(function() {
 
-                    init_element($(this));
+                    init_input_element($(this));
 
                 });
 
                 $(document).on('mouseover' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
 
-                    var $element = $(this).data('zci_input');
+                    var $input = $(this).data('zci_input');
 
                     // we're using this to know when the mouse is over the container
-                    $element.data('zci_mouseover', true);
+                    $input.data('zci_mouseover', true);
 
                     // show the button for clearing the value
-                    show($element);
+                    show($input);
 
                 });
 
                 $(document).on('mouseout' + plugin.namespace, '.' + plugin.settings.container_class_name, function() {
 
-                    var $element = $(this).data('zci_input');
+                    var $input = $(this).data('zci_input');
 
                     // we're using this to know when the mouse is over the container
-                    $element.data('zci_mouseover', false);
+                    $input.data('zci_mouseover', false);
 
                     // hide the button for clearing the value
-                    hide($element);
+                    hide($input);
 
                 });
 
@@ -99,13 +99,13 @@
 
                 $(document).on('click' + plugin.namespace, '.' + plugin.settings.button_class_name, function() {
 
-                    var $element = $(this).prev();
+                    var $input = $(this).prev();
 
                     // clear value and give focus to the element
-                    $element.val('').trigger('focus');
+                    $input.val('').trigger('focus');
 
                     // hide the button forcefully
-                    hide($element, true);
+                    hide($input, true);
 
                 });
 
@@ -114,75 +114,75 @@
             /**
              *  Initializes the clear button for a single element
              *
-             *  @param  jQuery  $element    The input element to initialize
+             *  @param  jQuery  $input      The input element to initialize
              *
              *  @access private
              *  @return void
              */
-            init_element = function($element) {
+            init_input_element = function($input) {
 
-                // only process input and textarea elements
-                if (!$element.is('input, textarea')) return;
+                // only process input elements
+                if (!$input.is('input')) return;
 
                 // skip password fields unless explicitly enabled
-                if ($element.is('input[type="password"]') && !plugin.settings.enable_on_password) return;
+                if ($input.is('input[type="password"]') && !plugin.settings.enable_on_password) return;
 
                 // only init if not already initialized
-                if ($element.data('zci_button')) return;
+                if ($input.data('zci_button')) return;
 
                 var // get input's "position" attribute
-                    position = $element.css('position'),
+                    position = $input.css('position'),
 
                     // the button to clear the input's value
-                    $button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html(plugin.settings.button_content);
+                    $clear_button = $('<a href="javascript: void(0)" tabindex="-1" class="' + plugin.settings.button_class_name + '">').html(plugin.settings.button_content);
 
-                // track elements for this instance
-                plugin.elements.push($element);
+                // track input elements for this instance
+                plugin.inputs.push($input);
 
                 // the element the plugin is attached to
-                $element
+                $input
 
                     // wrap the input in a container that we're going to use as a container for our button
                     // make sure its position is something other than "static"
                     // (the container inherits the input's display to preserve layout)
                     .wrap($('<div class="' + plugin.settings.container_class_name + '">').css({
                         position: position === 'static' ? 'relative' : position,
-                        display: $element.css('display'),
-                        verticalAlign: $element.css('vertical-align')
+                        display: $input.css('display'),
+                        verticalAlign: $input.css('vertical-align')
                     }))
 
                     // add the button and set its visibility to "hidden" for now
                     // because we need to position it after we can get its size
-                    .after($button.css({
+                    .after($clear_button.css({
                         visibility: 'hidden'
                     }));
 
                 // the button is now in the DOM so we can position it correctly at the right of the input box
                 // limit button height to prevent overflow with 2px spacing from input borders
-                var input_height = $element.outerHeight(),
-                    button_height = $button.outerHeight(),
-                    button_spacing = parseInt($element.css('borderTopWidth'), 10) + 2, // border width + 2px spacing
+                var input_height = $input.outerHeight(),
+                    button_height = $clear_button.outerHeight(),
+                    button_spacing = parseInt($input.css('borderTopWidth'), 10) + 2, // border width + 2px spacing
                     max_button_height = input_height - (button_spacing * 2);
 
                 // if button's height is too large compared to the input's height, adjust it so that is also has breathing space
-                if (button_height > max_button_height) $button.css('height', max_button_height);
+                if (button_height > max_button_height) $clear_button.css('height', max_button_height);
 
                 // calculate the button's best position
-                var button_position = (input_height - $button.outerHeight()) / 2;
+                var button_position = (input_height - $clear_button.outerHeight()) / 2;
 
                 // place the button
-                $button.css({
+                $clear_button.css({
                     top: button_position,
                     right: button_position,
                     overflow: 'hidden'
                 });
 
                 // restore visibility but hide from the DOM for now
-                $button.css('visibility', '').hide();
+                $clear_button.css('visibility', '').hide();
 
                 // store the reference to the button and the input element on the container
-                $element.data('zci_button', $button);
-                $element.parent().data('zci_input', $element);
+                $input.data('zci_button', $clear_button);
+                $input.parent().data('zci_input', $input);
 
             },
 
@@ -194,7 +194,7 @@
              *
              *  This behavior can be overwritten by setting the {@force} argument to `TRUE`.
              *
-             *  @param  jQuery  $element    The text input element, as jQuery object, for which to hide the associated
+             *  @param  jQuery  $input      The text input element, as jQuery object, for which to hide the associated
              *                              button.
              *
              *  @param  boolean force       (Optional) Setting this `TRUE` will hide the button even if the mouse is
@@ -205,30 +205,30 @@
              *  @access private
              *  @return void
              */
-            hide = function($element, force) {
+            hide = function($input, force) {
 
                 // if "force" is TRUE or the mouse is not over the text input element and the text input element does
                 // not have focus, hide the button
-                if (force || (!$element.data('zci_mouseover') && !$element.is(':focus'))) $element.data('zci_button').hide();
+                if (force || (!$input.data('zci_mouseover') && !$input.is(':focus'))) $input.data('zci_button').hide();
 
             },
 
             /**
              *  Shows the button for clearing the text input element's value *if* the text input element has a value
              *
-             *  @param  jQuery  $element    The text input element, as jQuery object, for which to hide the associated
+             *  @param  jQuery  $input      The text input element, as jQuery object, for which to hide the associated
              *                              button.
              *
              *  @access private
              *  @return void
              */
-            show = function($element) {
+            show = function($input) {
 
                 // if the input field has any value, show the button
-                if ($element.val() !== '') $element.data('zci_button').show();
+                if ($input.val() !== '') $input.data('zci_button').show();
 
                 // hide it otherwise
-                else $element.data('zci_button').hide();
+                else $input.data('zci_button').hide();
 
             };
 
@@ -250,30 +250,30 @@
             // remove only this instance's event handlers
             $(document).off(plugin.namespace);
 
-            // iterate over the elements from this instance
-            $.each(plugin.elements, function(_, $element) {
+            // iterate over the input elements from this instance
+            $.each(plugin.inputs, function(_, $input) {
 
-                var $button = $element.data('zci_button');
+                var $clear_button = $input.data('zci_button');
 
                 // if not already removed
-                if ($button) {
+                if ($clear_button) {
 
                     // remove the button
-                    $button.remove();
+                    $clear_button.remove();
 
                     // remove the container DIV
-                    $element.unwrap();
+                    $input.unwrap();
 
                     // remove associated data attributes
-                    $element.removeData('zci_mouseover');
-                    $element.removeData('zci_button');
+                    $input.removeData('zci_mouseover');
+                    $input.removeData('zci_button');
 
                 }
 
             });
 
-            // clear the elements array
-            plugin.elements = [];
+            // clear the input elements array
+            plugin.inputs = [];
 
         }
 
@@ -295,10 +295,10 @@
         */
         plugin.update = function() {
 
-            // iterate over the selector to find any new elements
+            // iterate over the selector to find any new input elements
             $(selector).each(function() {
 
-                init_element($(this));
+                init_input_element($(this));
 
             });
 
