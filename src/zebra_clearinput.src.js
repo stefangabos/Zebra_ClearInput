@@ -80,14 +80,15 @@
                     // restore visibility but hide from the DOM for now
                     $button.css('visibility', '').hide();
 
-                    // store the reference to the button
+                    // store the reference to the button and the input element on the container
                     $element.data('zci_button', $button);
+                    $element.parent().data('zci_input', $element);
 
                 });
 
                 $(document).on('mouseover.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
 
-                    var $element = $('input', this);
+                    var $element = $(this).data('zci_input');
 
                     // we're using this to know when the mouse is over the container
                     $element.data('zci_mouseover', true);
@@ -99,7 +100,7 @@
 
                 $(document).on('mouseout.zebra_clear_input', '.' + plugin.settings.container_class_name, function() {
 
-                    var $element = $('input', this);
+                    var $element = $(this).data('zci_input');
 
                     // we're using this to know when the mouse is over the container
                     $element.data('zci_mouseover', false);
