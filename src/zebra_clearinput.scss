@@ -7,10 +7,13 @@
     color: #666 !important;
     font-family: Arial;
     font-weight: bold;
-    line-height: 21px;
     text-decoration: none !important;
     background: #FFF;
     opacity: .8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 26px;
     &:hover,
     &:focus {
         border-color: #dedede;

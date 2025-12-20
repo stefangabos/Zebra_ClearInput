@@ -77,21 +77,37 @@
 
                         // wrap the input in a container that we're going to use as a container for our button
                         // make sure its position is something other than "static"
+                        // (the container inherits the input's display to preserve layout)
                         .wrap($('<div class="' + plugin.settings.container_class_name + '">').css({
-                            position: position === 'static' ? 'relative' : position
+                            position: position === 'static' ? 'relative' : position,
+                            display: $element.css('display'),
+                            verticalAlign: $element.css('vertical-align')
                         }))
 
                         // add the button and set its visibility to "hidden" for now
-                        // because we nee to position it after we can get its size
+                        // because we need to position it after we can get its size
                         .after($button.css({
                             visibility: 'hidden'
                         }));
 
                     // the button is now in the DOM so we can position it correctly at the right of the input box
-                    // and centered vertically
+                    // limit button height to prevent overflow with 2px spacing from input borders
+                    var input_height = $element.outerHeight(),
+                        button_height = $button.outerHeight(),
+                        button_spacing = parseInt($element.css('borderTopWidth'), 10) + 2, // border width + 2px spacing
+                        max_button_height = input_height - (button_spacing * 2);
+
+                    // if button's height is too large compared to the input's height, adjust it so that is also has breathing space
+                    if (button_height > max_button_height) $button.css('height', max_button_height);
+
+                    // calculate the button's best position
+                    var button_position = (input_height - $button.outerHeight()) / 2;
+
+                    // place the button
                     $button.css({
-                        top: ($element.outerHeight() - $button.outerHeight()) / 2,
-                        right: parseInt($element.css('paddingTop'), 10)
+                        top: button_position,
+                        right: button_position,
+                        overflow: 'hidden'
                     });
 
                     // restore visibility but hide from the DOM for now
