@@ -1,20 +1,27 @@
 /**
  *  Zebra ClearInput
  *
- *  A tiny jQuery plugin for enhancing web forms by allowing users to easily clear values in input boxes.
+ *  A tiny, high-performance jQuery plugin for enhancing web forms by allowing users to easily clear input field values.
  *
- *  Zebra ClearInput is a lightweight jQuery plugin designed to enhance the usability of web forms by adding a
- *  user-friendly feature that allows users to effortlessly clear the content of input fields. This is achieved by
- *  attaching a small icon to input fields. When users click on this icon, it promptly erases any text that has been
- *  entered.
+ *  Zebra ClearInput is a lightweight, optimized jQuery plugin that enhances form usability by adding an intuitive
+ *  clear button to input fields. When users click this button, it instantly erases the input content and returns
+ *  focus to the field for immediate re-entry.
  *
- *  As soon as a user begins typing in the input field, the option to clear the input value becomes visible. Once the
- *  input field loses focus, the option to clear the value reappears when the mouse hovers over the input field.
+ *  The clear button appears automatically when users start typing and intelligently manages its visibility: it shows
+ *  immediately on focus or hover, and gracefully hides when the field is empty or loses focus. Smart debouncing
+ *  reduces unnecessary operations during rapid typing for optimal performance.
  *
  *  Features:
  *
- *  -   it works out of the box and has (almost) no configuration options
- *  -   works in all modern browsers
+ *  - works out of the box with sensible defaults and minimal configuration
+ *  - optimized performance with event delegation
+ *  - supports multiple independent instances with isolated namespacing
+ *  - dynamically handles inputs added after initialization via `update()` method
+ *  - responsive layout preservation
+ *  - graceful error handling and memory leak prevention
+ *  - `destroy()` method for complete cleanup
+ *  - really tiny - weighs ~2KB uncompressed and ~800 bytes gzipped
+ *  - works in all modern browsers - Firefox, Chrome, Safari, Edge, Opera
  *
  *  Read more {@link https://github.com/stefangabos/Zebra_ClearInput/ here}
  *
