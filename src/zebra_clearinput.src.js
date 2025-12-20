@@ -37,10 +37,15 @@
                 container_class_name: 'Zebra_ClearInput_Container',
                 button_class_name: 'Zebra_ClearInput',
                 button_content: '×',
-                enable_on_password: false
+                enable_on_password: false,
+                debounce_delay: 150
             },
 
             plugin = this,
+
+            // debounce timer for keyup events
+            // used to throttle calls to the show() method
+            debounce_timer = null,
 
             /**
              *  Constructor method
@@ -98,10 +103,26 @@
 
                 });
 
-                $(document).on('focus' + plugin.namespace + ' keyup' + plugin.namespace, input_selector, function() {
+                $(document).on('focus' + plugin.namespace, input_selector, function() {
 
                     // show the button for clearing the value
                     show($(this));
+
+                });
+
+                $(document).on('keyup' + plugin.namespace, input_selector, function() {
+
+                    var $input = $(this);
+
+                    // clear any existing debounce timer
+                    if (debounce_timer) clearTimeout(debounce_timer);
+
+                    // set a new timer to show the button after the debounce delay
+                    debounce_timer = setTimeout(function() {
+
+                        show($input);
+
+                    }, plugin.settings.debounce_delay);
 
                 });
 
@@ -264,6 +285,9 @@
         *  @return void
         */
         plugin.destroy = function() {
+
+            // clear any pending debounce timer
+            if (debounce_timer) clearTimeout(debounce_timer);
 
             // remove only this instance's event handlers
             $(document).off(plugin.namespace);
